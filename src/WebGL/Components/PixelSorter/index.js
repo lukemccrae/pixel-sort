@@ -56,9 +56,9 @@ export default class PixelSorter {
 			if (this.experience.debug.active) this.experience.debug.ui.refresh()
 		})
 
-		document.getElementById('download').addEventListener('click', () => {
-			this.downloadImage()
-		})
+		// document.getElementById('download').addEventListener('click', () => {
+		// 	this.downloadImage()
+		// })
 	}
 
 	setGeometry() {

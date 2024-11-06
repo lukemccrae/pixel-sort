@@ -12,5 +12,5 @@ export const PARAMS = {
 	threshold: 1,
 	image: null,
 	mask: null,
-	direction: { x: 1, y: 0 },
+	direction: { x: 1, y: 2 },
 }
