@@ -8,9 +8,9 @@ export const state = {
 }
 
 export const PARAMS = {
-	size: 24,
+	size: 200,
 	threshold: 1,
 	image: null,
 	mask: null,
-	direction: { x: 1, y: 2 },
+	direction: { x: 1, y: 100 },
 }

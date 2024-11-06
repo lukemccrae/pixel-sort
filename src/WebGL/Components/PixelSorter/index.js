@@ -41,7 +41,10 @@ export default class PixelSorter {
 			const seed = this.seedManager.getUrlSeed()
 			PARAMS.image = this.experience.resources.items[`image${(seed % 10) + 1}Texture`].image
 			PARAMS.mask = this.experience.resources.items[`mask${(seed ** 2 % 10) + 1}Texture`]
-			this.thresholdProgressMaxDuration = 1000 + (seed % 10) * 1000
+
+			PARAMS.direction = { x: Math.random() * 100, y: Math.random() * 100 }
+
+			this.thresholdProgressMaxDuration = 10000 + (seed % 10) * 10000
 			this.thresholdMin = 0.15 - (seed % 10) * 0.01
 
 			//DirectionSeed
