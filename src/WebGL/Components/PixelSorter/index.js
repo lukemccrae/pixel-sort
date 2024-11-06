@@ -34,34 +34,38 @@ export default class PixelSorter {
 		initGPUCompute(PARAMS.image, PARAMS.size)
 		initDebug()
 
-		this.seedManager.on('reload', () => {
-			SoundManager.stop('earthquake')
-			this.timeElapsed = 0
-
-			const seed = this.seedManager.getUrlSeed()
-			PARAMS.image = this.experience.resources.items[`image${(seed % 10) + 1}Texture`].image
-			PARAMS.mask = this.experience.resources.items[`mask${(seed ** 2 % 10) + 1}Texture`]
-
-			PARAMS.direction = { x: Math.random() * 100, y: Math.random() * 100 }
-
-			this.thresholdProgressMaxDuration = 10000 + (seed % 10) * 10000
-			this.thresholdMin = 0.15 - (seed % 10) * 0.01
-
-			//DirectionSeed
-			const x = (seed % 3) - 1
-			const y = (Math.floor(seed / 3) % 3) - 1
-			PARAMS.direction = { x, y }
-			if (x === 0 && y === 0) PARAMS.direction = { x: 1, y: 0 }
-			if (!(x === 0 || y === 0)) PARAMS.direction = { x: 0, y: 1 }
-
-			initGPUCompute(PARAMS.image, PARAMS.size, true)
-			// SoundManager.play('earthquake')
-			if (this.experience.debug.active) this.experience.debug.ui.refresh()
+		this.experience.on('reload', (param) => {
+			this.reload(seed)
 		})
 
-		// document.getElementById('download').addEventListener('click', () => {
-		// 	this.downloadImage()
-		// })
+		this.seedManager.on('reload', () => {
+			this.reload(seed)	
+		})
+	}
+	reload() {
+		SoundManager.stop('earthquake')
+		this.timeElapsed = 0
+		this.url = new URL(window.location.href)
+		const seed = parseInt(this.url.searchParams.get('seed'), this.seedLength)
+
+		PARAMS.image = this.experience.resources.items[`image${(seed % 10) + 1}Texture`].image
+		PARAMS.mask = this.experience.resources.items[`mask${(seed ** 2 % 10) + 1}Texture`]
+
+		PARAMS.direction = { x: Math.random() * 100, y: Math.random() * 100 }
+
+		this.thresholdProgressMaxDuration = 10000 + (seed % 10) * 10000
+		this.thresholdMin = 0.15 - (seed % 10) * 0.01
+
+		//DirectionSeed
+		const x = (seed % 3) - 1
+		const y = (Math.floor(seed / 3) % 3) - 1
+		PARAMS.direction = { x, y }
+		if (x === 0 && y === 0) PARAMS.direction = { x: 1, y: 0 }
+		if (!(x === 0 || y === 0)) PARAMS.direction = { x: 0, y: 1 }
+
+		initGPUCompute(PARAMS.image, PARAMS.size, true)
+		// SoundManager.play('earthquake')
+		if (this.experience.debug.active) this.experience.debug.ui.refresh()
 	}
 
 	setGeometry() {

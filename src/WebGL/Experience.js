@@ -8,11 +8,13 @@ import SceneManager from 'utils/SceneManager.js'
 import sources from './sources.json'
 import { Mesh, Scene } from 'three'
 import SeedManager from 'utils/SeedManager.js'
+import EventEmitter from 'utils/EventEmitter.js'
 
 let instance = null
 
-export default class Experience {
+export default class Experience extends EventEmitter {
 	constructor(_canvas) {
+		super()
 		// Singleton
 		if (instance) {
 			return instance
@@ -35,6 +37,8 @@ export default class Experience {
 		this.renderer = new Renderer()
 		this.activeScene = new SceneManager()
 		this.seedManager = new SeedManager()
+		this.seedLength = 10
+		this.url = new URL(window.location.href)
 
 		// Resize event
 		this.sizes.on('resize', () => {
@@ -43,8 +47,22 @@ export default class Experience {
 
 		// Time tick event
 		this.time.on('tick', () => {
+			if(this.time.frameCount % 200 === 0) {
+				this.setUrlSeed(this.getRandomSeed())
+				this.trigger('reload')
+				this.debug.update()
+			}
 			this.update()
 		})
+	}
+
+	getRandomSeed(length = this.seedLength) {
+		return Math.floor(Math.random() * Math.pow(10, length))
+	}
+
+	setUrlSeed(seed) {
+		this.url.searchParams.set('seed', seed.toString())
+		window.history.replaceState({}, '', this.url)
 	}
 
 	resize() {
