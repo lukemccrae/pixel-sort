@@ -39,7 +39,10 @@ void main() {
     float gCurrent = gscale(currentTexture.rgb);
     float gReference = gscale(referenceTexture.rgb);
 
-    float floorThreshold = floor(uThreshold * 100.) / 100.;
+    // HERE changing divisor makes image more abstract
+    // vanilla value 100
+    float divisor = 10000.;
+    float floorThreshold = floor(uThreshold * 100.) / divisor;
 
     floorThreshold *= 1. - maskValue;
 

@@ -47,7 +47,7 @@ export default class Experience extends EventEmitter {
 
 		// Time tick event
 		this.time.on('tick', () => {
-			if(this.time.frameCount % 400 === 0) {
+			if(this.time.frameCount % 200 === 0) {
 				this.setUrlSeed(this.getRandomSeed())
 				this.trigger('reload')
 				this.debug.update()

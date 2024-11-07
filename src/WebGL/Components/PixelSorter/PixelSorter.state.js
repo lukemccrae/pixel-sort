@@ -8,7 +8,7 @@ export const state = {
 }
 
 export const PARAMS = {
-	size: 500,
+	size: 100,
 	threshold: 1,
 	image: null,
 	mask: null,

@@ -46,7 +46,9 @@ export default class Environment {
 
 	setEnvironmentMap() {
 		this.environmentMap = {}
-		this.environmentMap.intensity = 0.4
+		// HERE bumping up intensity dramatizes sorting effect
+		// vanilla value .4
+		this.environmentMap.intensity = .4
 		this.environmentMap.texture = this.resources.items.environmentMapTexture
 		this.environmentMap.texture.colorSpace = SRGBColorSpace
 
